@@ -19,7 +19,7 @@ class UsersTableSeeder extends Seeder
             'password'  => 'password'
         ]);
 
-        $admin->assignRole('admin');
+        $admin->assignRole('Admin');
 
         if (app()->isProduction())
             # Si la app esta en producción no podremos usar los factories asi que mejor lo dejamos hasta aca

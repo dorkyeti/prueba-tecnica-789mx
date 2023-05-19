@@ -2,6 +2,14 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Controllers\{
+    HomeController,
+    LoginController,
+    LogOutController,
+    RegisterController,
+    UsersController
+};
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -13,6 +21,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', HomeController::class);
+Route::get('/home', HomeController::class)->name('home');
+
+Route::get('/login', LoginController::class)->name('login');
+Route::post('/login', [LoginController::class, 'action']);
+
+Route::get('/logout', LogOutController::class)->name('logout');
+
+Route::get('/register', RegisterController::class)->name('register');
+Route::post('/register', [RegisterController::class, 'action']);
+
+Route::get('/users', UsersController::class)->name('users');

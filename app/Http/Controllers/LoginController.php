@@ -10,11 +10,8 @@ class LoginController extends Controller
     /**
      * Handle the incoming request.
      */
-    public function __invoke(Request $request)
+    public function __invoke()
     {
-        if (Auth::check())
-            return redirect('home');
-
         return view('login');
     }
 
@@ -28,8 +25,10 @@ class LoginController extends Controller
             'password'  => ['required', 'min:8']
         ]);
 
-        if (!Auth::attempt($data))
-            return back()->with('error', 'Error al intentar logear al usuario');
+        if (!Auth::attempt($data, $request->boolean('rememberme', false)))
+            return back()
+                ->withInput(['email'])
+                ->with('error', 'Error al intentar logear al usuario');
 
         $request->session()->regenerate();
 

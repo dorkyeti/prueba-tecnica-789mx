@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     LoginController,
     LogOutController,
     RegisterController,
+    ToDosController,
     UsersController
 };
 
@@ -21,15 +22,18 @@ use App\Http\Controllers\{
 |
 */
 
-Route::get('/', HomeController::class);
-Route::get('/home', HomeController::class)->name('home');
+Route::middleware('guest')->group(function () {
+    Route::get('/login', LoginController::class)->name('login');
+    Route::post('/login', [LoginController::class, 'action']);
+    Route::get('/register', RegisterController::class)->name('register');
+    Route::post('/register', [RegisterController::class, 'action']);
+});
 
-Route::get('/login', LoginController::class)->name('login');
-Route::post('/login', [LoginController::class, 'action']);
+Route::middleware('auth')->group(function () {
+    Route::get('/', HomeController::class);
+    Route::get('/home', HomeController::class)->name('home');
+    Route::get('/todos', ToDosController::class)->name('todos');
+    Route::get('/users', UsersController::class)->name('users');
 
-Route::get('/logout', LogOutController::class)->name('logout');
-
-Route::get('/register', RegisterController::class)->name('register');
-Route::post('/register', [RegisterController::class, 'action']);
-
-Route::get('/users', UsersController::class)->name('users');
+    Route::get('/logout', LogOutController::class)->name('logout');
+});

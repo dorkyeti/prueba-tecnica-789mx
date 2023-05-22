@@ -10,6 +10,17 @@ use Spatie\Permission\Models\Role;
 
 class UsersController extends Controller
 {
+    public function __construct()
+    {
+        // $this->middleware('permission:"crear todos"', ['only' => ['store']]);
+        $this->handlePermissions([
+            'crear usuarios'   =>  ['store'],
+            'ver usuarios'     =>  ['index', 'show'],
+            'editar usuarios'  =>  ['update'],
+            'eliminar usuarios' =>  ['destroy']
+        ]);
+    }
+
     /**
      * Display a listing of the resource.
      */

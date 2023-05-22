@@ -13,9 +13,6 @@ class RegisterController extends Controller
      */
     public function __invoke(Request $request)
     {
-        if (Auth::check())
-            return redirect('home');
-
         return view('register');
     }
 

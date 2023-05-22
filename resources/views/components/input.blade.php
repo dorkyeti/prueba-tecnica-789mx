@@ -19,9 +19,14 @@ $label ??= true;
         name="{{ $input }}" 
         id="{{ $input }}"
         value="{{ $valor ?? old($input) }}"
-        class="@isset($readonly)form-control-plaintext @else form-control @endisset @error($input)is-invalid @enderror"
+        @class([
+            'form-control', 
+            'form-control-plaintext' => isset($readonly) && $readonly, 
+            'is-invalid' => $errors->has($input)
+        ])
         @isset($attrs) @foreach ($attrs as $name => $attr) {{ $name }}="{{ $attr }}" @endforeach @endisset
-        @isset($readonly) readonly @endisset @if ($required) required @endif />
+        @readonly(isset($readonly) && $readonly) @required($required) 
+    />
     <div class="invalid-feedback">
         @error($input)
             {{ $message }}
